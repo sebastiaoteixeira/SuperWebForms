@@ -1,0 +1,48 @@
+@import url(https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;500;600;700;800&display=swap);
+
+* {
+    margin     : 0;
+    font-family: 'Baloo Da 2', cursive;
+    z-index    : inherit
+}
+
+.black {
+    color: black;
+}
+
+section {
+    width        : 500px;
+    height       : auto;
+    margin       : 20px auto;
+    border       : 4px solid rgba(0, 0, 0, 0.2);
+    padding      : 32px;
+    border-radius: 22px;
+}
+
+form {
+    text-align: left;
+}
+
+.dot {
+    height          : 14px;
+    width           : 14px;
+    border-radius   : 50%;
+    display         : inline-block;
+}
+
+.center {
+    text-align: center;
+}
+
+form>input {
+    margin-right: 40px;
+}
+
+th,
+td {
+    padding: 15px;
+}
+
+#submit {
+    float: right;
+}

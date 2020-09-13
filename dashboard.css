@@ -1,0 +1,30 @@
+.forms {
+    min-height    : 600px;
+    vertical-align: top;
+}
+
+h1 {
+    margin: 8px 12px;
+}
+
+.new {
+    padding  : 12px;
+    font-size: 15pt;
+}
+
+.new:hover {
+    background-color: grey!important;
+}
+
+th,
+td {
+    height: 50px;
+}
+
+th {
+    width: 36%;
+}
+
+td {
+    width: 28%;
+}

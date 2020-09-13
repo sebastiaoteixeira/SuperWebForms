@@ -1,0 +1,63 @@
+.flex-footer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+fieldset {
+    width: 100px;
+}
+
+.flex-footer-element{
+    align-items: center;
+    vertical-align: middle;
+    width :28%;
+    height: 350px;
+    margin   : 18px 18px!important;
+}
+
+.footer-title {
+    float: left;
+}
+
+.vertical-line{
+    border-left: 1px solid white;
+    height: 300px;
+    position: relative;
+    top: 40px;
+}
+
+#google_translate_element {
+    position: relative;
+}
+
+
+.contact {
+    margin   : 18px;
+    min-width: 200px;
+    width    : 50%;
+}
+
+.contact-text {
+    min-width: 200px;
+    width    : 95%;
+    max-width: 2000px;
+}
+
+
+.site-map:link{
+    color : white;
+}
+
+.site-map:visited{
+    color : rgb(112, 146, 255);
+}
+
+.site-map:active{
+    color : rgb(134, 134, 134);
+}
+
+
+#copyright {
+    float: right;
+}
