@@ -1,9 +1,9 @@
 <?php
 //  MySQL/MariaDB Database
-define("SQLServer", "");
-define("SQLUsername", "");
-define("SQLPassword", "");
-define("database", "");
+define("SQLServer", "server:port");
+define("SQLUsername", "user");
+define("SQLPassword", "pass");
+define("database", "database");
 
 //Segurança contra SQLInjection (Prepared Query)
 function prepareQuery($conn, $query, $type, array $parameters)
@@ -110,12 +110,15 @@ function get_email($id)
     //Segurança contra SQLInjection
     $safe_id = $conn->real_escape_string($id);
 
+
     //SQL Query - obtenção do id
-    $readID = "SELECT Email FROM Login WHERE ID=" . $safe_id . ";";
+    $readID = "SELECT Email FROM Login WHERE Hash='" . $safe_id . "';";
+
 
     $res = $conn->query($readID);
 
     $email = $res->fetch_all();
+
     return $email[0][0];
 }
 
@@ -174,8 +177,6 @@ function create_session($email, $remember)
         die("Connection failed: " . $conn->connect_error);
     }
 
-    echo '<br>connection<br>';
-
     //Segurança contra SQLInjection
     $safe_email = $conn->real_escape_string($email);
 
@@ -183,22 +184,19 @@ function create_session($email, $remember)
     if ($remember == true) {
         $time = "168:00:00";
     } else {
-        $time = "12:00:00";
+        $time = "24:00:00";
     }
     echo $time;
 
     //SQL Query - inserção de dados (temporários)
-    $create_session = "INSERT INTO Login (Email, Expire) VALUES (?, (ADDTIME(NOW(), ?)));";
+    $create_session = "INSERT INTO Login (Email, Hash, Expire) VALUES (?, SHA1(" . time() . "), (ADDTIME(NOW(), ?)));";
 
     //Execução
-    echo prepareQuery($conn, $create_session, "ss", array($safe_email, $time));
-
-    echo '<br>inserted<br>';
+    prepareQuery($conn, $create_session, "ss", array($safe_email, $time));
 
     //SQL Query - obtenção do id
-    $readID = "SELECT id FROM Login ORDER BY ID DESC LIMIT 1;";
-    echo '1';
-    //
+    $readID = "SELECT Hash FROM Login ORDER BY ID DESC LIMIT 1;";
+
     $res = $conn->query($readID);
     $id = $res->fetch_all();
     echo var_dump($id);
@@ -206,9 +204,7 @@ function create_session($email, $remember)
 
     $conn->close();
 
-    echo '<br>conn closed';
-
-    //removeOldSessions();
+    removeOldSessions();
 
     return $id[0][0];
 }

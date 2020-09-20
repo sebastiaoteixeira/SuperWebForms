@@ -1,7 +1,7 @@
 function imgadj() {
     var windowWidth = window.innerWidth;
     if (windowWidth < 1280) {
-        $('#start-img').attr('src', 'img/icon/start.png');
+        $('#start-img').attr('src', 'img/logo/start.png');
         $('#start-img').css('width', '200px');
         $('#start-img').css('bottom', '0px');
     }

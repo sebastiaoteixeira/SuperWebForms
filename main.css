@@ -17,7 +17,7 @@ body {
 * {
     margin     : 0;
     font-family: 'Baloo Da 2', cursive;
-    z-index    : inherit
+    z-index    : inherit;
 }
 
 h2 {
@@ -25,7 +25,7 @@ h2 {
 }
 
 .warn {
-    color: red;
+    color: rgb(255, 0, 0);
 }
 
 button,
@@ -48,7 +48,16 @@ header {
     top             : 0;
     width           : 100%;
     max-height      : 64px;
-    z-index         : 9999;
+    z-index         : 100;
+}
+
+.red {
+    background-color: rgb(255, 0, 0)!important;
+    color:black;
+}
+
+.rect {
+    border-radius: 0 !important;
 }
 
 img#logo {
@@ -105,7 +114,7 @@ img#logo {
 }
 
 .top-buttons {
-    position: relative;
+    position      : relative;
     float         : right;
     vertical-align: middle;
     height        : 64px;
@@ -116,17 +125,17 @@ img#logo {
 }
 
 #burger_menu {
-    position: absolute;
+    position  : absolute;
     visibility: hidden;
-    max-height      : 64px;
-    right: 15px;
-    top: 0px;
+    max-height: 64px;
+    right     : 15px;
+    top       : 0px;
 }
 
 @media only screen and (max-device-width: 600px) {
     .top-buttons {
         visibility: hidden;
-        top: 64px;
+        top       : 64px;
     }
 
     #burger_menu {
@@ -143,7 +152,7 @@ hr {
 }
 
 .main-btn:active {
-    box-shadow: inset 2px 2px 1px rgba(0, 0, 0, .8);
+    box-shadow: inset 2px 2px 1px rgba(0, 0, 0, .8)!important;
 }
 
 button:focus {
@@ -160,7 +169,7 @@ button:focus {
 
 #start * {
     position: relative;
-    z-index : 500;
+    z-index : 50;
 }
 
 
@@ -288,7 +297,7 @@ img#start-img {
     margin       : auto;
     margin-top   : 1px;
     margin-bottom: 15px;
-    text-align : center;
+    text-align   : center;
 }
 
 footer {

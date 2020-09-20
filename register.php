@@ -3,6 +3,7 @@
 
 include 'mysql.php';
 include 'login_cookie.php';
+include 'redirect.php';
 
 function sendError($err_code)
 {
@@ -134,11 +135,6 @@ function setName($postName, $postAnonym)
     }
 }
 
-function dashboard()
-{
-    header("Location: http://localhost:5500/dashboard.php");
-    die();
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = setName($_POST['username'], $_POST['anonymous']);
@@ -158,7 +154,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $password = hash("sha3-384", $password);
             if (sendToDatabase($email, $username, $password, $salt) == 0) {
                 $id = create_session($email, $remember);
-                $id = strval($id);
                 setcookie('login', $id, 0, '/');
                 create_user_paths($email);
                 dashboard();

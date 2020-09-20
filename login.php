@@ -2,6 +2,7 @@
 
 
 include 'mysql.php';
+include 'redirect.php';
 
 function sendError($err_code)
 {
@@ -44,11 +45,6 @@ function setName($postName, $postAnonym)
     }
 }
 
-function dashboard()
-{
-    header("Location: http://localhost:5500/dashboard.php");
-    die();
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['e-mail'];
@@ -65,7 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = hash("sha512", $password);
     if (readFromDatabase($email, $password, $salt) == 0) {
         $id = create_session($email, $remember);
-        $id = strval($id);
 
         setcookie('Session_ID', $id, $expiration, '/');
         dashboard();
