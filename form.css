@@ -24,7 +24,9 @@ p {
     padding  : 1px;
 }
 
-
+#form{
+    padding: 48px 36px;
+}
 
 .flex-button {
     background-color: white;
@@ -43,4 +45,8 @@ p {
 
 .flex-container {
     justify-content: center !important;
+}
+
+.textQuestion {
+    margin: 12px;
 }

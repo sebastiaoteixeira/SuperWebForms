@@ -43,11 +43,10 @@
             include 'mysql.php';
             include 'files-manager.php';
 
-            $email = get_email($_COOKIE['Session_ID']);
+
+            $email = get_email($_COOKIE['Login_Token']);
             $title = get_filesName($email);
             $qtd_forms = count($title);
-
-
 
             if ($qtd_forms == 0) {
                 echo "<tr><th></th><td>Ainda não existem formulários na tua biblioteca. Prime '<strong>Criar novo</strong>' para começar a criar o teu primeiro formulário.</td></tr><tr></tr><tr></tr><tr></tr>";
@@ -55,13 +54,13 @@
                 $form_number = 0;
                 foreach ($title as $form_name) {
                     if ($form_number  == 0) {
-                        echo '<tr><td><div class="form-container"><a style="color:black;" href="form.php?title=' . substr($form_name, 0, -5) . '">' . substr($form_name, 0, -5) . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></div></td>';
+                        echo '<tr><td><div class="form-container"><a style="color:black;" href="formEdit.php?title=' . $form_name . '">' . $form_name . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></div></td>';
                     } elseif ($form_number == ($qtd_forms - 1)) {
-                        echo '<td><div class="form-container"><a style="color:black;" href="form.php?title=' . substr($form_name, 0, -5) . '">' . substr($form_name, 0, -5) . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></div></td></tr>';
+                        echo '<td><div class="form-container"><a style="color:black;" href="formEdit.php?title=' . $form_name . '">' . $form_name . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></div></td></tr>';
                     } elseif ($form_number % 3 == 0) {
-                        echo '</tr><tr><td><div class="form-container"><a style="color:black;" href="form.php?title=' . substr($form_name, 0, -5) . '">' . substr($form_name, 0, -5) . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></td>';
+                        echo '</tr><tr><td><div class="form-container"><a style="color:black;" href="formEdit.php?title=' . $form_name . '">' . $form_name . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></td>';
                     } else {
-                        echo '<td><div class="form-container"><a style="color:black;" href="form.php?title=' . substr($form_name, 0, -5) . '">' . substr($form_name, 0, -5) . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></td>';
+                        echo '<td><div class="form-container"><a style="color:black;" href="formEdit.php?title=' . $form_name . '">' . $form_name . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></td>';
                     }
                     $form_number++;
                 }
@@ -148,6 +147,8 @@
             $('#date').prop('min', new Date().toJSON.split('T')[0]);
         });
     </script>
+      <div id="cookie"></div>
+
 </body>
 
 </html>

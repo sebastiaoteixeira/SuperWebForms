@@ -1,25 +1,23 @@
 <?php
-include 'form-classes.php';
 include 'mysql.php';
-include_once 'files-manager.php';
+include 'files-manager.php';
+include 'form-classes.php';
 include 'redirect.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $user = get_email($_COOKIE['Login_Token']);
     
-    $form_name = $_GET['form_title'];
+    $form_name = $_GET['oldTitle'];
 
     $formTxt = read_form($form_name, $user);
     $form = json_decode($formTxt);
 
-    switch ($_GET['type']) {
-        case 'text':
-            $newBlock = new textQuestion($_GET['question'], 0, $_GET['rows']);
-            break;
-    }
-
-    array_push($form->pages[$_GET['page']]->blocks, $newBlock);
+    $form->title = $_GET['title'];
+    $form->description = $_GET['description'];
+    $form->timed = $_GET['timed'];
+    $form->hour = $_GET['hour'];
+    $form->date = $_GET['date'];
 
     $formTxt = json_encode($form);
     save_form($user, $form->title, $formTxt);

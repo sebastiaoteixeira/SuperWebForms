@@ -6,7 +6,7 @@ include 'redirect.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $user = get_email($_COOKIE['Session_ID']);
+    $user = get_email($_COOKIE['Login_Token']);
     $title = $_POST['title'];
     $description = $_POST['description'];
     $timed = $_POST['timed'];
@@ -31,5 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break;
         }
     }
+    new_formID($user, $title);
     dashboard();
 }

@@ -1,15 +1,15 @@
 <?php
 //  MySQL/MariaDB Database
-define("SQLServer", "server:port");
-define("SQLUsername", "user");
-define("SQLPassword", "pass");
-define("database", "database");
+define("SQLServer", "localhost:3306");
+define("SQLUsername", "SQLUser");
+define("SQLPassword", "SQLPass");
+define("database", "WebFormsDatabase");
 
 //Segurança contra SQLInjection (Prepared Query)
 function prepareQuery($conn, $query, $type, array $parameters)
 {
     $stmt = $conn->prepare($query);
-    call_user_func_array(array($stmt, "bind_param"), array_merge(array($type), $parameters));
+    call_user_func_array(array($stmt, "bind_param"), refValues(array_merge(array($type), $parameters)));
     $stmt->execute();
     $res = $stmt->fetch();
     $stmt->close();
@@ -17,7 +17,18 @@ function prepareQuery($conn, $query, $type, array $parameters)
     return $res;
 }
 
-function readFromDatabase($email, $password, $time)
+function refValues($arr){
+    if (strnatcmp(phpversion(),'5.3') >= 0) //Reference is required for PHP 5.3+
+    {
+        $refs = array();
+        foreach($arr as $key => $value)
+            $refs[$key] = &$arr[$key];
+        return $refs;
+    }
+    return $arr;
+}
+
+function readFromDatabase($email, $password)
 {
     $conn = new mysqli(SQLServer, SQLUsername, SQLPassword, database);
 
@@ -63,15 +74,23 @@ function sendToDatabase($email, $name, $password, $time)
 
 
     if ($res == NULL) {
-        $addToDatabase = "INSERT INTO Accounts (email, name, password, time) VALUES (?, ?, SHA2(?,512), ?);";
+        $addToDatabase = "INSERT INTO Accounts (email, name, password, time, registerToken, verified) VALUES (?, ?, SHA2(?,512), ?, SHA1(" . time() . "), false);";
 
         $res = prepareQuery($conn, $addToDatabase, "ssss", array($safe_email, $safe_name, $password, $time));
 
         $out = 0;
     }
 
+
+    //SQL Query - obtenção do id
+    $readID = "SELECT registerToken FROM Accounts ORDER BY ID DESC LIMIT 1;";
+
+    $res = $conn->query($readID);
+    $id = $res->fetch_all();
+
+
     $conn->close();
-    return $out;
+    return $id[0];
 }
 
 function get_name($email)
@@ -131,21 +150,101 @@ function get_news()
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $getNews = "SELECT * FROM News ORDER BY id DESC LIMIT 3;
-    ";
+    $getNews = "SELECT * FROM News ORDER BY id DESC LIMIT 3;";
 
     $res = $conn->query($getNews);
 
+    $out = $res->fetch_all();
 
-
-    if ($res != NULL) {
-        $out = $res->fetch_all();
-    }
 
     $conn->close();
     return $out;
 }
 
+function get_formID($user, $form_name){
+    $conn = new mysqli(SQLServer, SQLUsername, SQLPassword, database);
+
+    //Verifica-se a presença de erros
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    //Segurança contra SQLInjection
+    $safe_user = $conn->real_escape_string($user);
+    $safe_title = $conn->real_escape_string($form_name);
+
+    //SQL Query - obtenção do id
+    $readID = "SELECT * FROM Forms WHERE User='" . $safe_user . "' AND Form='". $safe_title ."';";
+
+
+    $res = $conn->query($readID);
+
+    $id = $res->fetch_all();
+
+    return $id[0][0];
+}
+
+function get_formFromID($id){
+    $conn = new mysqli(SQLServer, SQLUsername, SQLPassword, database);
+
+    //Verifica-se a presença de erros
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    //Segurança contra SQLInjection
+    $safe_ID = $conn->real_escape_string($id);
+
+    //SQL Query - obtenção do id
+    $readID = "SELECT * FROM Forms WHERE ID='" . $safe_ID . "';";
+
+
+    $res = $conn->query($readID);
+
+    $id = $res->fetch_row();
+
+    return $id;
+}
+
+function new_formID($user, $form_name){
+    $conn = new mysqli(SQLServer, SQLUsername, SQLPassword, database);
+
+    //Verifica-se a presença de erros
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    //Segurança contra SQLInjection
+    $safe_user = $conn->real_escape_string($user);
+    $safe_title = $conn->real_escape_string($form_name);
+
+    //SQL Query - obtenção do id
+    $newForm = "INSERT INTO Forms (user, form) VALUES (?,?);";
+
+    prepareQuery($conn, $newForm, "ss", array($safe_user, $safe_title));
+
+    return;
+}
+
+function removeFormID($title, $user)
+{
+    $conn = new mysqli(SQLServer, SQLUsername, SQLPassword, database);
+
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $safe_title = $conn->real_escape_string($title);
+    $safe_user = $conn->real_escape_string($user);
+
+    $removeForm = "DELETE FROM Forms WHERE user=? AND form=?;";
+
+    prepareQuery($conn, $removeForm, "ss", array($safe_user, $safe_title));
+
+    $conn->close();
+    return;
+}
 
 function removeOldSessions()
 {
@@ -186,7 +285,6 @@ function create_session($email, $remember)
     } else {
         $time = "24:00:00";
     }
-    echo $time;
 
     //SQL Query - inserção de dados (temporários)
     $create_session = "INSERT INTO Login (Email, Hash, Expire) VALUES (?, SHA1(" . time() . "), (ADDTIME(NOW(), ?)));";
@@ -199,7 +297,6 @@ function create_session($email, $remember)
 
     $res = $conn->query($readID);
     $id = $res->fetch_all();
-    echo var_dump($id);
 
 
     $conn->close();

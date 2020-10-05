@@ -1,22 +1,17 @@
 <?php
 include 'mysql.php';
 include 'files-manager.php';
+include 'redirect.php';
 include 'form-classes.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $data = get_formFromID($_GET['id']);
-    $form = getOForm($data[1], $data[2]);
-
-    date_default_timezone_set('UTC');
-    if ($form->timed != null) {
-        if ($date == null) {
-            $time = time() + strtotime('1970-01-01 '.$form->hour);
-        } else {
-            $time = strtotime($form->date . ' ' . $form->hour);
-        }
-    }
+    $user = get_email($_COOKIE['Login_Token']);
+    $form_name = $_GET['form_name'];
+    $title = $_GET['title'];
+    $form = getOForm($user, $form_name, $title);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-PT">
@@ -30,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="form.css">
     <link rel="stylesheet" href="formBlocks.css">
-    <link rel="stylesheet" href="hide-header.css">
 
 
     <script type="text/javascript">
@@ -48,7 +42,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 </head>
 
 <body>
-    <header></header>
+    <header <?php
+            if ($form->title == null) {
+                echo 'style="display:none;"';
+            } else {
+                echo 'style="position:static;opacity:1;"';
+            }
+            ?>></header>
+    <div></div>
 
     <div id="head">
         <table>
@@ -56,49 +57,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 <th>
                     <h1 style="text-align:left;"><?php echo $form->title; ?></h1>
                 </th>
+                <td>
+                    <h3 style="text-align:right;">Copia e partilha:</h3>
+                    <input style="width:180px;float:right;" type="text" name="share_id" id="share_id" onclick="this.focus();this.select()" readonly="readonly" value="<?php echo url . '/form.php?id=' . get_formID($user, $form->title); ?>">
+                </td>
+                <th>
+                    <button style="position:fixed;" class="obtn main-btn right new">+</button>
+                </th>
             </tr>
         </table>
     </div>
 
     <div style="text-align:center">
         <section id="form">
-            <form id="formBlocks" method="post" action="submitForm.php">
-            <input style="width:10px;float:right;visibility:hidden;" type="text" name="id" id="id" onclick="this.focus();this.select()" readonly="readonly" value="<?php echo $_GET["id"]; ?>"></td>
+            <h3><?php echo $form->description; ?></h3>
 
-                <div id="form-content">
-                    <h3><?php echo $form->description; ?></h3>
-                </div>
-                <button type="submit" style="float:right;" class="rect obtn">Submeter</button>
-            </form>
+
         </section>
     </div>
+
 
     <footer></footer>
 
     <script type="text/javascript" src="form.js"></script>
 
+
     <script>
         $(document).ready(function() {
             let spaceSize = $(document).height() - $('#form').height() - 700;
+            let spaceSizeTxt = String(spaceSize) + 'px';
             $('footer').css('margin-top', spaceSize);
 
-            $('header').hover(function() {
-                $('#header').slideDown()
-            }, function() {
-                $('#header').slideUp()
-            })
-
-
             <?php
-            foreach ($form->pages[0]->blocks as $key => $block) {
-                $html = $form->print(0, $key);
-                echo "$('#form-content').append('" . $html . "');";
+            foreach ($form->page[0]->blocks as $key => $block) {
+                $html = $form->print($key);
+                echo "$('section').append('" . $html . "');";
+                echo "$('textarea').last().prop('value','" . $block->response . "');";
             }
+            echo "$('textarea').prop('readonly', 'readonly');";
+            echo "$('.trash').remove();";
             ?>
-            $('.trash').remove();
 
+            $('.modal').click(function(target) {
+                if (!$(event.target).closest(".modal-content").length) {
+                    $('.modal').css('display', 'none');
+                }
+            });
 
-            $('.temp').prop('disabled', true);
+            if ($('#timed').prop("checked")) {
+                $('.temp').prop('disabled', false);
+            }
             $('#timed').on('change', function() {
                 $('.temp').prop('disabled', !($(this).prop("checked")));
             });
@@ -115,16 +123,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             });
 
             $('#date').prop('min', new Date().toJSON.split('T')[0]);
-
         });
-        setInterval(function() {
-            let d = new Date();
-            let n = d.getTime();
-            if (n / 1000 >= <?php echo $time; ?>) {
-                $('#formBlocks').submit();
-            }
-        }, 60000);
     </script>
+      <div id="cookie"></div>
+
 </body>
 
 </html>

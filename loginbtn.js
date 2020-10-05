@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     $("#logout").click(function () {
       document.cookie =
-        "Session_ID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        "Login_Token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         location.reload();
     });
 

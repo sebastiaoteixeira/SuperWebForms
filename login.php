@@ -36,16 +36,6 @@ function salt($email)
 }
 
 
-function setName($postName, $postAnonym)
-{
-    if ($postAnonym == true) {
-        return 'anonymous';
-    } else {
-        return $_POST['username'];
-    }
-}
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['e-mail'];
     $password = $_POST['password'];
@@ -59,10 +49,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $salt = salt($email);
     $password = hash("sha3-384", $password . $salt);
     $password = hash("sha512", $password);
-    if (readFromDatabase($email, $password, $salt) == 0) {
+    if (readFromDatabase($email, $password) == 0) {
         $id = create_session($email, $remember);
 
-        setcookie('Session_ID', $id, $expiration, '/');
+        setcookie('Login_Token', $id, $expiration, '/');
         dashboard();
     } else {
         echo 'Email/Password incorreto. Por favor reintroduza os dados.';

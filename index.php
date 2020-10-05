@@ -11,13 +11,14 @@
 
     <script type="text/javascript">
         function googleTranslateElementInit() {
-            new google.translate.TranslateElement({ pageLanguage: 'pt-PT', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
+            new google.translate.TranslateElement({
+                pageLanguage: 'pt-PT',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
         }
     </script>
 
-    <script type="text/javascript"
-        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="main.js"></script>
 </head>
 
@@ -40,8 +41,7 @@
                 </div>
 
                 <div class="grid-element4">
-                    <a href="register.html"><button class="start-btn obtn"
-                            href="file:///home/tiao/Projects/WebForms/register.html" on> Começar agora </button></a>
+                    <a href="register.html"><button class="start-btn obtn" href="file:///home/tiao/Projects/WebForms/register.html" on> Começar agora </button></a>
                 </div>
 
                 <div class="grid-element5">
@@ -62,8 +62,10 @@
                 </div>
                 <div class="flex-element how-to-element">
                     <h1>2</h1>
-                    
-                    <p><nobr>Constrói um formulário</nobr> e partilha-o.</p>
+
+                    <p>
+                        <nobr>Constrói um formulário</nobr> e partilha-o.
+                    </p>
                 </div>
                 <div class="flex-element how-to-element">
                     <h1>3</h1>
@@ -77,13 +79,13 @@
 
         <div id="news flex-container">
             <h2>Novidades</h2>
-            <div  id="flex_news" class="flex-container">
-            </div>
+            <div id="flex_news" class="flex-container"></div>
         </div>
     </div>
 
     <footer></footer>
 
 </body>
+<div id="cookie"></div>
 
 </html>

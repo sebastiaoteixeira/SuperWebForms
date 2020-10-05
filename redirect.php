@@ -1,14 +1,15 @@
 <?php
-define('url', 'http://url');
+define('url', 'http://dominio');
 
 function dashboard()
 {
     header("Location: " . url . "/dashboard.php");
+    echo '2';
     die();
 }
 
-function form($title)
+function formEdit($title)
 {
-    header("Location: " . url . "/form.php?title=" . $title);
+    header("Location: " . url . "/formEdit.php?title=" . $title);
     die();
 }

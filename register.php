@@ -3,7 +3,16 @@
 
 include 'mysql.php';
 include 'login_cookie.php';
+include 'files-manager.php';
 include 'redirect.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+
+define('userMail', 'email@domain.com');
+define('passMail', '****************');
 
 function sendError($err_code)
 {
@@ -135,6 +144,31 @@ function setName($postName, $postAnonym)
     }
 }
 
+function sendValidityEmail($email, $name, $userKey)
+{
+    $mail = new PHPMailer();
+    $mail->isSMTP();
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = 'ssl';
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 465;
+    $mail->isHTML(true);
+    $mail->Username = userMail;
+    $mail->Password = passMail;
+    $mail->From = userMail;
+    $mail->FromName = 'superWebForms';
+    $mail->Subject = "Valide a sua conta - superWebForms";
+    $mail->Body = 'Olá ' . $name;
+    $mail->addAddress($email);
+    if (!$mail->send()) {
+        echo 'Mailer Error: ' . $mail->ErrorInfo;
+        return false;
+    } else {
+        echo 'The email message was sent.';
+        return true;
+    }
+}
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = setName($_POST['username'], $_POST['anonymous']);
@@ -152,9 +186,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $password .= $salt;
 
             $password = hash("sha3-384", $password);
-            if (sendToDatabase($email, $username, $password, $salt) == 0) {
-                $id = create_session($email, $remember);
-                setcookie('login', $id, 0, '/');
+            $registerToken = sendToDatabase($email, $username, $password, $salt);
+            $id = create_session($email, $remember);
+            setcookie('login', $id, 0, '/');
+            if (sendValidityEmail($email, $username, $registerToken)) {
                 create_user_paths($email);
                 dashboard();
             }

