@@ -38,6 +38,13 @@ fieldset {
     width    : 50%;
 }
 
+@media only screen and (max-width: 600px){
+    .flex-footer-element{
+        align-items: center;
+        width :88%;
+    }
+}
+
 .contact-text {
     min-width: 200px;
     width    : 95%;

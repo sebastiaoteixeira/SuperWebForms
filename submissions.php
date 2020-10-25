@@ -2,6 +2,7 @@
 include 'mysql.php';
 include 'files-manager.php';
 include 'form-classes.php';
+include 'redirect.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $user = get_email($_COOKIE['Login_Token']);
@@ -22,7 +23,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <title>WebForms - Painel de Controlo</title>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="icon" href="img/logo/favicon.png">
 
+	<!-- Matomo -->
+	<script type="text/javascript">
+	  var _paq = window._paq = window._paq || [];
+	  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+	  _paq.push(['trackPageView']);
+	  _paq.push(['enableLinkTracking']);
+	  (function() {
+	    var u="//superwebforms.infinityfreeapp.com/matomo/";
+	    _paq.push(['setTrackerUrl', u+'matomo.php']);
+	    _paq.push(['setSiteId', '1']);
+	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+	    g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+	  })();
+	</script>
+	<!-- End Matomo Code -->
+
+	<noscript>
+		<!-- Matomo Image Tracker-->
+		<img src="https://superwebforms.infinityfreeapp.com/matomo/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+		<!-- End Matomo -->
+	</noscript>
 
     <script type="text/javascript">
         function googleTranslateElementInit() {
@@ -35,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
     </script>
+    <script src="mobile_adjust.js"></script>
     <script src="main.js"></script>
 
 </head>
@@ -47,24 +71,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 <th>
                     <h1>Meus Formulários</h1>
                 </th>
-                <td></td>
-                <th>
-                    <button class="obtn main-btn right new">Criar novo</button>
-                </th>
+                <td>
+                    <h3 style="text-align:right;">Copia e partilha:</h3>
+                    <input style="width:180px;float:right;" type="text" name="share_id" id="share_id" onclick="this.focus();this.select()" readonly="readonly" value="<?php echo url . '/form.php?id=' . get_formID($user, $form->title); ?>">                </td>
             </tr>
             <tr height="50px"></tr>
             <?php
-            include 'mysql.php';
-            include 'files-manager.php';
-
             $title = get_filesName($user . '/' . $form->title);
             foreach ($title as $key => $form_name) {
-                if ($title == $form->title) {
+                if ($form_name == ($form->title . '.json')) {
                     unset($title[$key]);
                 }
             }
             $qtd_forms = count($title);
-
 
             if ($qtd_forms == 0) {
                 echo "<tr><th></th><td>Ainda não existem submissões neste formulários.</td></tr><tr></tr><tr></tr><tr></tr>";
@@ -72,13 +91,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 $form_number = 0;
                 foreach ($title as $form_name) {
                     if ($form_number  == 0) {
-                        echo '<tr><td><div class="form-container"><a style="color:black;" href="form.php?title=' . substr($form_name, 0, -5) . '">' . substr($form_name, 0, -5) . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></div></td>';
+                        echo '<tr><td><div class="form-container"><a style="color:black;" href="filledForm.php?form_name='.$form->title.'&title=' . substr($form_name, 0, -5) . '">' . substr($form_name, 0, -5) . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></div></td>';
                     } elseif ($form_number == ($qtd_forms - 1)) {
-                        echo '<td><div class="form-container"><a style="color:black;" href="form.php?title=' . substr($form_name, 0, -5) . '">' . substr($form_name, 0, -5) . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></div></td></tr>';
+                        echo '<td><div class="form-container"><a style="color:black;" href="filledForm.php?form_name='.$form->title.'&title=' . substr($form_name, 0, -5) . '">' . substr($form_name, 0, -5) . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></div></td></tr>';
                     } elseif ($form_number % 3 == 0) {
-                        echo '</tr><tr><td><div class="form-container"><a style="color:black;" href="form.php?title=' . substr($form_name, 0, -5) . '">' . substr($form_name, 0, -5) . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></td>';
+                        echo '</tr><tr><td><div class="form-container"><a style="color:black;" href="filledForm.php?form_name='.$form->title.'&title=' . substr($form_name, 0, -5) . '">' . substr($form_name, 0, -5) . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></td>';
                     } else {
-                        echo '<td><div class="form-container"><a style="color:black;" href="form.php?title=' . substr($form_name, 0, -5) . '">' . substr($form_name, 0, -5) . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></td>';
+                        echo '<td><div class="form-container"><a style="color:black;" href="filledForm.php?form_name='.$form->title.'&title=' . substr($form_name, 0, -5) . '">' . substr($form_name, 0, -5) . '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete_form.php?name=' . $form_name . '"><img class="trash" style="height:20px;" src="img/icon/3592821-garbage-can-general-office-recycle-bin-rubbish-bin-trash-bin-trash-can_107760.svg"></img></a></td>';
                     }
                     $form_number++;
                 }
@@ -98,11 +117,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     <script>
         $(document).ready(function() {
-
-
-
-
-
             $('#delete_account').click(function() {
                 $('table').html('<div style="text-align:center; font-size:32pt;">Atenção! Se continuar a sua conta e todos os seus dados serão permanentemente eliminados.<br><a style="text-decoration: none;" href="delete.php"><buttons class="rect obtn main-btn red" style="font-color: black">Apagar dados e conta</button></a></div>');
             });

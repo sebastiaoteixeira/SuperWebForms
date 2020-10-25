@@ -1,8 +1,6 @@
 <?php
 
-
 include 'mysql.php';
-include 'login_cookie.php';
 include 'files-manager.php';
 include 'redirect.php';
 
@@ -11,8 +9,8 @@ use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
 
-define('userMail', 'email@domain.com');
-define('passMail', '****************');
+define('userMail', 'EMailAddress');
+define('passMail', 'MailPassword****');
 
 function sendError($err_code)
 {
@@ -23,6 +21,7 @@ function sendError($err_code)
                 window.location.replace('" . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/login.html"
                 . "');
             }, 5000);</script>";
+                die();
             break;
 
         case 102:
@@ -31,6 +30,7 @@ function sendError($err_code)
                 window.location.replace('" . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/register.html"
                 . "');
             }, 5000);</script>";
+                die();
             break;
 
         case 103:
@@ -39,6 +39,7 @@ function sendError($err_code)
                 window.location.replace('" . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/register.html"
                 . "');
             }, 5000);</script>";
+                die();
             break;
 
         case 104:
@@ -47,6 +48,7 @@ function sendError($err_code)
                 window.location.replace('" . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/register.html"
                 . "');
             }, 5000);</script>";
+                die();
             break;
 
         case 105:
@@ -55,6 +57,8 @@ function sendError($err_code)
                 window.location.replace('" . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/register.html"
                 . "');
             }, 5000);</script>";
+                die();
+
             break;
 
         case 111:
@@ -63,6 +67,8 @@ function sendError($err_code)
                     window.location.replace('" . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/register.html"
                 . "');
                 }, 5000);</script>";
+                    die();
+
             break;
 
         case 211:
@@ -71,6 +77,8 @@ function sendError($err_code)
                         window.location.replace('" . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/register.html"
                 . "');
                     }, 5000);</script>";
+                        die();
+
             break;
     }
 }
@@ -130,17 +138,16 @@ function verifyPassword($password, $confirm)
 
 function salt()
 {
-    $date = date("YmdHis");
-    return $date;
+    return time();
 }
 
 
 function setName($postName, $postAnonym)
 {
-    if ($postAnonym == true) {
+    if ($postAnonym == 'true') {
         return 'anonymous';
     } else {
-        return $_POST['username'];
+        return $postName;
     }
 }
 
@@ -158,7 +165,7 @@ function sendValidityEmail($email, $name, $userKey)
     $mail->From = userMail;
     $mail->FromName = 'superWebForms';
     $mail->Subject = "Valide a sua conta - superWebForms";
-    $mail->Body = 'Olá ' . $name;
+    $mail->Body = 'Olá <b>' . $name . '</b>,<br><br>Bem-vindo(a) a superWebForm.com!<br>Antes de poderes partilhar os teus formulários, é necessário confirmar o registro.<br>Para o fazer clique:<a href="superwebforms.infinityfreeapp.com/validateAccount.php?token=' . $userKey . '">Aqui</a><br><br>Se a sua conta não for confirmada em 4 dias ela será eliminada permanentemente.';
     $mail->addAddress($email);
     if (!$mail->send()) {
         echo 'Mailer Error: ' . $mail->ErrorInfo;
@@ -171,12 +178,38 @@ function sendValidityEmail($email, $name, $userKey)
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	define("RECAPTCHA_V3_SECRET_KEY", '6LfHHtYZAAAAAAoRDTuu6tArAzLYGzJW_3nhueTz');
+ 
+	if (isset($_POST['email']) && $_POST['email']) {
+   	 $email = filter_var($_POST['email'], FILTER_SANITIZE_STRING);
+	} else {
+	    // set error message and redirect back to form...
+	    header('location: register.html');
+	    exit;
+	}
+ 
+	$token = $_POST['token'];
+	$action = $_POST['action'];
+
+	// call curl to POST request
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL,"https://www.google.com/recaptcha/api/siteverify");
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('secret' => RECAPTCHA_V3_SECRET_KEY, 'response' => $token)));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($ch);
+	curl_close($ch);
+	$arrResponse = json_decode($response, true);
+ 
+	// verify the response
+	if($arrResponse["success"] == '1' && $arrResponse["action"] == $action && $arrResponse["score"] >= 0.5) {
+	
     $username = setName($_POST['username'], $_POST['anonymous']);
 
-    $email = $_POST['e-mail'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
     $confirm = $_POST['confirm'];
-
+    
     $emailValidity = verifyEmail($email);
     $passwordValidity = verifyPassword($password, $confirm);
 
@@ -184,11 +217,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($passwordValidity == 0) {
             $salt = salt();
             $password .= $salt;
-
+            
             $password = hash("sha3-384", $password);
             $registerToken = sendToDatabase($email, $username, $password, $salt);
+
+
             $id = create_session($email, $remember);
-            setcookie('login', $id, 0, '/');
+            setcookie('Login_Token', $id, 0, '/');
             if (sendValidityEmail($email, $username, $registerToken)) {
                 create_user_paths($email);
                 dashboard();
@@ -199,4 +234,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         sendError($emailValidity);
     }
+    } else {
+	    echo '<h1>Recaptcha detetou atividade maliciosa. Por favor, tente novamente</h1>';
+        register(2000);
+	}
 }
+?>

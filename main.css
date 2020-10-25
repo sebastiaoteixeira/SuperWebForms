@@ -24,6 +24,11 @@ h2 {
     margin-left: 4%;
 }
 
+p{
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 .warn {
     color: rgb(255, 0, 0);
 }
@@ -54,6 +59,14 @@ header {
 .red {
     background-color: rgb(255, 0, 0) !important;
     color           : black;
+}
+
+.warn{
+    width: 50%;
+    padding: 20px;
+    font-size: 20pt;
+    text-align: center;
+    margin: 0 auto 68px auto;
 }
 
 .rect {
@@ -262,6 +275,12 @@ img#start-img {
     text-align : center;
 }
 
+@media only screen and (max-width: 600px){
+    .slogan, .grid-element2 {
+        left: 0;
+    }
+}
+
 .start-btn {
     border-radius: 20px;
     height       : 50px;
@@ -294,7 +313,8 @@ img#start-img {
 }
 
 .news-element {
-    width        : 20%;
+    min-width    : 280px;
+    max-width    : 380px;
     margin       : auto;
     margin-top   : 1px;
     margin-bottom: 15px;
@@ -304,9 +324,20 @@ img#start-img {
 footer {
     background-color: #3f3f3f;
     color           : #ddd;
-    min-height      : 380px;
+    min-height      : 415px;
 }
 
+@media only screen and (max-device-width: 600px) {
+    footer {
+        min-height      : 480px!important;
+    }
+    .news-element {
+        width        : 80%!important;
+    }
+    #cookieConsent {
+        visibility: hidden;
+    }
+}
 /*Cookie Consent Begin*/
 #cookieConsent {
     background-color: rgba(20, 20, 20, 0.8);

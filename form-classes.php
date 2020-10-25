@@ -70,7 +70,7 @@ class textQuestion extends block
     $this->correct = $correct;
     $this->rows = $rows;
     $this->required = false;
-    $this->htmlBlock = '<div><div><h2>' . $this->question . '</h2></div><div><textarea name="' . $this->question . '" class="textQuestion" cols=32 rows=' . $this->rows . '></textarea></div><br>';
+    $this->htmlBlock = '<div><div><h2>' . $this->question . '</h2></div><div><textarea name="' . $this->question . '" class="formQuestion textQuestion" cols=32 rows=' . $this->rows . '></textarea></div><br>';
   }
 }
 
@@ -92,9 +92,10 @@ function getOForm($user, $form_name, $title = null)
     $formData = json_decode($formDataTxt);
 
     $form = new form($formData->title, $formData->description, $formData->timed, $formData->hour, $formData->date);
-    foreach ($formData->pages as $page) {
-      foreach ($page->blocks as $block) {
-        $form->page->addTextQuestion($block->question, $block->correct, $block->rows);
+    foreach ($formData->pages as $keyP => $page) {
+      foreach ($page->blocks as $keyB => $block) {
+        $form->pages[$keyP]->addTextQuestion($block->question, $block->correct, $block->rows);
+        $form->pages[$keyP]->blocks[$keyB]->response = $block->response;
       }
     }
   }

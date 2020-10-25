@@ -1,5 +1,5 @@
 <?php
-define('path', "/path/to/website/");
+define('path', "/path/to/site/");
 
 function create_user_paths($email)
 {
@@ -54,6 +54,20 @@ function read_response($title, $response_name, $user)
 function delete_form($file_name, $user)
 {
     $files = scandir(path . 'users/private/' . $user . '/' . $file_name);
+    foreach ($files as $file) {
+        if ($file != '.' && $file != '..') {
+            $filePath = path . 'users/private/' . $user . '/' . $file_name . '/' . $file;
+            is_dir($filePath) ? delete_form($file, $user) : unlink($filePath);
+        }
+    }
+    rmdir(path . 'users/private/' . $user . '/' . $file_name);
+
+    return;
+}
+
+function delete_account_directory($user)
+{
+    $files = scandir(path . 'users/private/' . $user);
     foreach ($files as $file) {
         if ($file != '.' && $file != '..') {
             $filePath = path . 'users/private/' . $user . '/' . $file_name . '/' . $file;

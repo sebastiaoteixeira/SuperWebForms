@@ -20,6 +20,10 @@ h1 {
     background-color: grey !important;
 }
 
+.form-container{
+    text-align: center;
+}
+
 th,
 td {
     height    : 50px;

@@ -7,10 +7,11 @@
         <label for="c-email">E-mail:</label>
         <input type="text" name="c-email" class="contact-text">
         <label for="c-subject">Questão:<br></label>
-        <input type="radio" name="c-subject">Técnica &nbsp&nbsp&nbsp&nbsp&nbsp
-        <input type="radio" name="c-subject">Informativa<br>
+        <input type="radio" name="c-subject" value="Questao Tecnica">Técnica &nbsp&nbsp&nbsp&nbsp&nbsp
+        <input type="radio" name="c-subject" value="Questao Informativa">Informativa<br>
         <label for="c-content">Corpo:</label>
         <textarea name="c-content" class="contact-text" cols="21" rows="5"></textarea>
+        <button type="submit" class="wbtn rect">Enviar</button>
       </fieldset>
     </form>
   </div>

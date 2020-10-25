@@ -6,7 +6,8 @@ $(document).ready(function () {
             $(".wrap").unwrap();
         }
         $(".wrap").wrap("<tr></tr>");
-    }
+}
+    
 });
 
 $(document).ready(function () {
@@ -19,10 +20,10 @@ $(document).ready(function () {
       if (current_state == "visible") {
         var next_state = "hidden";
       } else {
-        alert("12");
         var next_state = "visible";
       }
   
       $(".top-buttons").css("visibility", next_state);
+      $(".menu-spacer").css("visibility", next_state);
     });
   });

@@ -5,12 +5,12 @@
     </a>
     <div class="top-buttons">
         <a href="explore.php"><button class="wbtn lbtn main-btn" id="explore">Explorar</button></a>
+        <hr class="menu-spacer">
         <button class="wbtn lbtn main-btn" id="contact-btn" onclick="contact()">Contactar</button>
+        <hr class="menu-spacer">
 
         <?php
         include 'mysql.php';
-
-
 
         if ($_COOKIE['Login_Token'] != null) {
             $email = get_email($_COOKIE['Login_Token']);
@@ -33,9 +33,9 @@
             }
         } else {
             echo '<a href="login.html">';
-            echo '<button class="rbtn right login-btn main-btn">login</button>';
+            echo '<button class="rbtn right login-btn main-btn">log in</button>';
             echo '</a>';
-
+            echo '<hr class="menu-spacer">';
             echo '<a href="register.html">';
             echo '<button class="right obtn main-btn" id="register">Registro</button>';
             echo '</a>';
@@ -46,14 +46,19 @@
     <img id="burger_menu" class="right" src="/img/menu/Hamburger_icon.svg_blank.png">
     <script>
         $(document).ready(function() {
-            function adjTopBtn() {
-                let windowWidth = window.innerWidth;
-                let topButtons_width = String(windowWidth - 250) + 'px';
-                $('.top-buttons').css('width', topButtons_width);
+            let windowWidth = $(window).width();
+            if(windowWidth > 600){
+                function adjTopBtn() {
+                    let windowWidth = window.innerWidth;
+                    let topButtons_width = String(windowWidth - 250) + 'px';
+                
+                    $('.top-buttons').css('width', topButtons_width);
+                }
+                adjTopBtn();
+                setInterval(adjTopBtn, 2000);
             }
-            adjTopBtn();
-            setInterval(adjTopBtn, 2000);
         })
+    
     </script>
 </div>
 <div id="contact-space"></div>

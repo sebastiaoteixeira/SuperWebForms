@@ -11,6 +11,6 @@ h2{
     font-weight: 500;
 }
 
-.formInput[type="text"]{
-    
+textarea{
+    margin-right: 5%!important;
 }

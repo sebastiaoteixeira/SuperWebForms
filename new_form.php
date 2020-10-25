@@ -12,12 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $timed = $_POST['timed'];
     $hour = $_POST['hour'];
     $date = $_POST['date'];
-
+    
     $form = new form($title, $description, $timed, $hour, $date);
 
     //JSON ENCODE
     $formTxt = json_encode($form);
+    
     $code = create_form($_POST['title'], $user, $formTxt);
+
     if ($code == 0) {
         echo $code;
     } else {

@@ -31,7 +31,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <link rel="stylesheet" href="form.css">
     <link rel="stylesheet" href="formBlocks.css">
     <link rel="stylesheet" href="hide-header.css">
+    <link rel="icon" href="img/logo/favicon.png">
 
+	<!-- Matomo -->
+	<script type="text/javascript">
+	  var _paq = window._paq = window._paq || [];
+	  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+	  _paq.push(['trackPageView']);
+	  _paq.push(['enableLinkTracking']);
+	  (function() {
+	    var u="//superwebforms.infinityfreeapp.com/matomo/";
+	    _paq.push(['setTrackerUrl', u+'matomo.php']);
+	    _paq.push(['setSiteId', '1']);
+	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+	    g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+	  })();
+	</script>
+	<!-- End Matomo Code -->
+
+	<noscript>
+		<!-- Matomo Image Tracker-->
+		<img src="https://superwebforms.infinityfreeapp.com/matomo/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+		<!-- End Matomo -->
+	</noscript>
 
     <script type="text/javascript">
         function googleTranslateElementInit() {
@@ -117,13 +139,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $('#date').prop('min', new Date().toJSON.split('T')[0]);
 
         });
+        <?php if ($form->timed) {
+            echo "
         setInterval(function() {
             let d = new Date();
             let n = d.getTime();
-            if (n / 1000 >= <?php echo $time; ?>) {
+            if (n / 1000 >= ".$time."; ) {
                 $('#formBlocks').submit();
             }
-        }, 60000);
+        }, 60000);";
+        }
+        ?>
     </script>
 </body>
 
