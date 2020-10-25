@@ -1,0 +1,395 @@
+@import url(https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;500;600;700;800&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
+
+:root {
+    --start-height: 0;
+}
+
+html,
+body {
+    width     : 100%;
+    height    : 100%;
+    margin    : 0px;
+    padding   : 0px;
+    overflow-x: hidden;
+}
+
+* {
+    margin     : 0;
+    font-family: 'Baloo Da 2', cursive;
+    z-index    : inherit;
+}
+
+h2 {
+    margin-left: 4%;
+}
+
+p{
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.warn {
+    color: rgb(255, 0, 0);
+}
+
+button,
+a {
+    cursor: pointer;
+}
+
+button.wbtn:hover {
+    background-color: orange;
+}
+
+button.obtn:hover {
+    background-color: white;
+}
+
+header {
+    position        : sticky;
+    position        : -webkit-sticky;
+    background-color: #6477d5;
+    top             : 0;
+    width           : 100%;
+    max-height      : 64px;
+    z-index         : 100;
+}
+
+.red {
+    background-color: rgb(255, 0, 0) !important;
+    color           : black;
+}
+
+.warn{
+    width: 50%;
+    padding: 20px;
+    font-size: 20pt;
+    text-align: center;
+    margin: 0 auto 68px auto;
+}
+
+.rect {
+    border-radius: 0 !important;
+}
+
+img#logo {
+    max-height: 64px;
+}
+
+.main-btn {
+    padding       : 3px;
+    border        : none;
+    border-radius : 1000px;
+    margin        : 0% 5%;
+    vertical-align: middle;
+}
+
+.obtn {
+    box-shadow      : 3px 2px 0 rgba(0, 0, 0, .6);
+    background-color: orange !important;
+    border          : none !important;
+    font-weight     : 600;
+}
+
+.wbtn {
+    box-shadow      : 3px 2px 0 rgba(0, 0, 0, .6);
+    background-color: #fff;
+    font-weight     : 600;
+}
+
+
+.login-btn {
+    background-color: rgba(0, 0, 0, 0);
+    font-size       : 12pt;
+    color           : white;
+    text-decoration : underline;
+    margin          : 12px 18px auto 0;
+}
+
+#register {
+    height: 42px;
+    margin: 8px 10px auto 0;
+}
+
+.lbtn {
+    margin   : 15px 5%;
+    min-width: 8%;
+}
+
+.left {
+    float   : left;
+    overflow: auto;
+}
+
+.right {
+    float   : right;
+    overflow: auto;
+}
+
+.top-buttons {
+    position      : relative;
+    float         : right;
+    vertical-align: middle;
+    height        : 64px;
+}
+
+#register {
+    width: 80px;
+}
+
+#burger_menu {
+    position  : absolute;
+    visibility: hidden;
+    max-height: 64px;
+    right     : 15px;
+    top       : 0px;
+}
+
+@media only screen and (max-device-width: 600px) {
+    .top-buttons {
+        visibility: hidden;
+        top       : 64px;
+    }
+
+    #burger_menu {
+        visibility: visible;
+    }
+}
+
+hr {
+    border-top   : 6px solid rgb(226, 226, 226);
+    border-radius: 10px;
+    width        : 95%;
+    margin       : auto;
+
+}
+
+.main-btn:active {
+    box-shadow: inset 2px 2px 1px rgba(0, 0, 0, .8) !important;
+}
+
+button:focus {
+    outline: 0;
+}
+
+#content {
+    min-height: 12px;
+}
+
+#start {
+    background-color: rgb(0, 0, 131);
+}
+
+#start * {
+    position: relative;
+    z-index : 50;
+}
+
+
+img#start-img {
+    position: relative;
+    width   : 200px;
+}
+
+@media only screen and (max-widthdevice-width: 600px) {
+    img#start-img {
+        visibility: hidden !important;
+    }
+}
+
+.grid {
+    display: grid;
+}
+
+#starter-grid {
+    grid-gap             : 10px 25px;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows   : 250px 100px 100px;
+}
+
+@media only screen and (max-device-width: 700px) {
+    #starter-grid {
+        grid-gap             : 10px 25px;
+        grid-template-columns: 50% 50% !important;
+        grid-template-rows   : 250px 100px 100px;
+    }
+}
+
+.slogan {
+    position      : relative;
+    left          : 6%;
+    grid-row      : 1;
+    grid-column   : 1 / span 2;
+    padding-left  : 20px;
+    text-align    : initial;
+    color         : white;
+    font-family   : 'Montserrat';
+    vertical-align: middle;
+    padding-top   : 25px;
+    font-weight   : 100;
+    letter-spacing: 2px;
+    font-size     : 42pt;
+}
+
+.grid-element2 {
+    position      : relative;
+    left          : 6%;
+    grid-row      : 2;
+    grid-column   : 1 / span 2;
+    text-align    : initial;
+    vertical-align: middle;
+    padding       : 0px 24px;
+}
+
+#description {
+    color    : white;
+    font-size: 14pt;
+
+}
+
+.grid-element3 {
+    grid-row   : 3;
+    grid-column: 1;
+    text-align : center;
+}
+
+.grid-element4 {
+    grid-row   : 3;
+    grid-column: 2;
+    text-align : left;
+}
+
+.grid-element5 {
+    position   : relative;
+    grid-row   : 1 / span 2;
+    grid-column: 3 / span 2;
+    text-align : center;
+    top        : 100px;
+    right      : 15%;
+}
+
+.grid-element6 {
+    grid-row   : 3;
+    grid-column: 4;
+    text-align : center;
+}
+
+@media only screen and (max-width: 600px){
+    .slogan, .grid-element2 {
+        left: 0;
+    }
+}
+
+.start-btn {
+    border-radius: 20px;
+    height       : 50px;
+    width        : 100px;
+    font-size    : 12pt;
+    line-height  : 16px;
+}
+
+.flex-container {
+    display        : flex;
+    flex-flow      : row wrap;
+    justify-content: space-around;
+    align-items    : stretch;
+}
+
+.flex-element {
+    border-style: dashed;
+    border-color: rgba(0, 0, 0, .28);
+    border-width: 5px;
+    padding     : 18px;
+}
+
+.how-to-element {
+    width        : 150px;
+    height       : auto;
+    margin       : auto;
+    margin-top   : 15px;
+    margin-bottom: 15px;
+    text-align   : center;
+}
+
+.news-element {
+    min-width    : 280px;
+    max-width    : 380px;
+    margin       : auto;
+    margin-top   : 1px;
+    margin-bottom: 15px;
+    text-align   : center;
+}
+
+footer {
+    background-color: #3f3f3f;
+    color           : #ddd;
+    min-height      : 415px;
+}
+
+@media only screen and (max-device-width: 600px) {
+    footer {
+        min-height      : 480px!important;
+    }
+    .news-element {
+        width        : 80%!important;
+    }
+    #cookieConsent {
+        visibility: hidden;
+    }
+}
+/*Cookie Consent Begin*/
+#cookieConsent {
+    background-color: rgba(20, 20, 20, 0.8);
+    min-height      : 26px;
+    font-size       : 14px;
+    color           : #ccc;
+    line-height     : 26px;
+    padding         : 8px 0 8px 30px;
+    font-family     : "Trebuchet MS", Helvetica, sans-serif;
+    position        : fixed;
+    bottom          : 0;
+    left            : 0;
+    right           : 0;
+    display         : none;
+    z-index         : 9999;
+}
+
+#cookieConsent a {
+    color          : #4B8EE7;
+    text-decoration: none;
+}
+
+#closeCookieConsent {
+    float      : right;
+    display    : inline-block;
+    cursor     : pointer;
+    font       : 30px;
+    height     : 30px;
+    width      : 20px;
+    margin     : -10px 0 0 0;
+    font-weight: bold;
+}
+
+#closeCookieConsent:hover {
+    color: #FFF;
+}
+
+#cookieConsent a.cookieConsentOK {
+    position        : relative;
+    bottom          : 15px;
+    background-color: #F1D600;
+    color           : #000;
+    display         : inline-block;
+    border-radius   : 5px;
+    padding         : 0 20px;
+    cursor          : pointer;
+    float           : right;
+    margin          : 0 60px 0 10px;
+}
+
+#cookieConsent a.cookieConsentOK:hover {
+    background-color: #E0C91F;
+}
+
+/*Cookie Consent End*/

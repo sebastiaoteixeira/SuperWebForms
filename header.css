@@ -1,0 +1,48 @@
+.hide-menu{
+    position:relative;
+    bottom: 56px;
+}
+
+hr{
+    display:none;
+}
+
+@media only screen and (max-width: 600px){
+    .top-buttons{
+        position: fixed;
+        left: 0;
+        width: 100%;
+        background-color:white;
+        height: 280px;
+        padding:auto;
+        text-align: center!important;
+        z-index: 1000;
+    }
+    .top-buttons>*, .top-buttons >*>*, .login-btn {
+        text-align: center!important;
+        width: 90%!important;
+        border-radius: 0!important;
+        color:black!important;
+        box-shadow: none;
+    }
+    .hide-menu{
+        position: relative;
+        top: 0;
+        width: auto;
+        margin:auto;
+    }
+    a {
+        margin: 0;
+    }
+    button.top-buttons >*>*:active {
+        background-color: orange;
+    }
+    hr {
+        display: block!important;
+        border-style: solid;
+        border-width: 1px 0;
+        border-color: rgba(0, 0, 0, 0.185);
+        width: 90%;
+        margin: 5px;
+    }
+}

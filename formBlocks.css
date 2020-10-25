@@ -1,0 +1,16 @@
+h3{
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+h2, h3{
+    text-align: left;
+}
+
+h2{
+    font-weight: 500;
+}
+
+textarea{
+    margin-right: 5%!important;
+}

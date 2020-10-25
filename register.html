@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+	<script src="jquery-3.5.1.min.js"></script>
+	<script src="jquery.redirect.js"></script>
+
+	</script>
+	<script>
+		$("#prospects_form").submit(function (e) {
+            e.preventDefault();
+        });
+	</script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name='description' content='Uma plataforma que permite ao usuário construir formulários, testes e inquéritos, construída durante o período da pandemia, Covid-19. Inscreve-te já!'>
+	<title>SuperWebForms - Registro</title>
+	<link rel="stylesheet" href="main.css">
+	<link rel="stylesheet" href="register.css">
+	<link rel="icon" href="img/logo/favicon.png">
+
+	<!-- Matomo -->
+	<script type="text/javascript">
+		var _paq = window._paq = window._paq || [];
+	  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+	  _paq.push(['trackPageView']);
+	  _paq.push(['enableLinkTracking']);
+	  (function() {
+	    var u="//superwebforms.infinityfreeapp.com/matomo/";
+	    _paq.push(['setTrackerUrl', u+'matomo.php']);
+	    _paq.push(['setSiteId', '1']);
+	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+	    g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+	  })();
+	</script>
+	<!-- End Matomo Code -->
+
+	<noscript>
+		<!-- Matomo Image Tracker-->
+		<img src="https://superwebforms.infinityfreeapp.com/matomo/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+		<!-- End Matomo -->
+	</noscript>
+
+	<script src="https://www.google.com/recaptcha/api.js">
+
+	</script>
+	<script src="https://www.google.com/recaptcha/api.js?render=6LfHHtYZAAAAAIf-z6xPll_3uu4ccC0HB4u35AYN">
+
+	</script>
+	<script type="text/javascript">
+		function onSubmit(token) {
+            document.getElementById("signup").submit();
+        }
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'pt-PT', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
+        }
+
+        $(document).ready(function(){
+        $('#signup').submit(function(event) {
+        event.preventDefault();
+	var input1 = $('#username').val();
+        var input2 = $('#anonymous:checkbox:checked').length > 0;
+        var input3 = $('#e-mail').val();
+        var input4 = $('#password').val();
+        var input5 = $('#confirm').val();
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LfHHtYZAAAAAIf-z6xPll_3uu4ccC0HB4u35AYN', {action: 'register'}).then(function(gtoken) {
+                $.redirect("register.php", {username: input1, anonymous: input2, email: input3, password: input4, confirm: input5, token: gtoken, action: 'register'});
+            });
+        });
+        });});
+	</script>
+	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+	</script>
+
+	<script src="main.js">
+	</script>
+
+	<script src="mobile_adjust.js">
+	</script>
+</head>
+
+<body>
+	<header></header>
+	<h1 style="margin-left: 8%;">Registro</h1>
+	<section>
+		<form method="post" class="register-form" name="signup" id="signup">
+			<table>
+				<tr>
+					<th>
+						<label for="username">Nome:</label></th>
+                    <td><input type='text' name="username" id="username" class="wrap"></td>
+                    <td><label for="anonymous">Anónimo</label>
+                        <input type="checkbox" name="anonymous" id="anonymous"></td>
+                </tr>
+                <tr>
+                    <th><label for="e-mail" class="wrap">Email:</label></th>
+                    <td><input type="email" name="e-mail" id="e-mail" class="wrap"></td>
+                </tr>
+                <tr>
+                    <th><label for="password">Senha:</label></th>
+                    <td><input type='password' name='password' id="password" class="wrap"></td>
+                </tr>
+                <tr>
+                    <td><span class="dot"></span></td>
+                    <td class="warn"></td>
+                </tr>
+                <tr>
+                    <th><label for="confirm">Confirmar Senha:</label></th>
+                    <td><input type='password' name='confirm' id="confirm" class="wrap"></td>
+                </tr>
+                <tr>
+                    <td name="captcha"></td>
+                </tr>
+                <tr>
+                    <td><!--<button type="submit" class="g-recaptcha obtn wrap" data-sitekey="6LfHHtYZAAAAAIf-z6xPll_3uu4ccC0HB4u35AYN" data-callback='onSubmit' data-action='submit'>SUBMETER</button></td>-->
+                    <button type="submit" class="obtn wrap">SUBMETER</button></td>
+                    <td></td>
+                    <td class="center"><a href="login.html" class="black wrap">
+                            <nobr>Já está registrado?</nobr><br>Login.
+                        </a></td>
+                </tr>
+            </table>
+            </table>
+        </form>
+    </section>
+    <div id="register-ad" style="item-align:center;margin:10px">
+        <fieldset style="margin:auto;">
+            <legend>Anúncio</legend>
+            <iframe data-aa="1495303" src="//ad.a-ads.com/1495303?size=970x90&background_color=ededed&text_color=000000" scrolling="no" style="width:970px; height:90px; border:0px; padding:0; overflow:hidden" allowtransparency="true">
+            </iframe>
+        </fieldset>
+    </div>
+    <footer></footer>
+
+    <script>
+        $('#username').prop('disabled', false);
+        $('#anonymous').on('change', function () {
+            $('#username').prop('disabled', $(this).prop("checked"));
+        })
+
+    </script>
+    <div id="cookie"></div>
+
+</body>
+
+</html>

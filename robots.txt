@@ -1,0 +1,18 @@
+User-agent: * 
+
+Disallow: /register.php
+Disallow: /login.php
+Disallow: /validateAccount.php
+Disallow: /submitForm.php
+Disallow: /saveBlock.php
+Disallow: /news.php
+Disallow: /redirect.php
+Disallow: /recapthalib.php
+Disallow: /new_news.php
+Disallow: /new_form.php
+Disallow: /mysql.php
+Disallow: /js/*
+Disallow: /form-classes.php
+Disallow: /files-manager.php
+
+Sitemap: https://superwebforms.infinityfreeapp.com
