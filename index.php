@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="maValidation" content="ebc8f04c03fa38cd7f56d03bfff34025">
     <meta name='description' content='Uma plataforma que permite construir formulários, testes e inquéritos, construída durante o período da pandemia, Covid-19. Registra-te já para poderes começar.'>
-    <title>SuperWebForms - Início</title>
+    <title>Super WebForms - Início</title>
     <link rel="stylesheet" href="main.css">
     <link rel="icon" href="img/logo/favicon.png">
 
@@ -112,7 +112,7 @@
 
     <footer></footer>
 
+    <div id="cookie"></div>
 </body>
-<div id="cookie"></div>
 
 </html>

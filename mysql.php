@@ -1,21 +1,15 @@
 <?php
-//  MySQL/MariaDB Database
-define("SQLServer", "MySQLServerAddress");
-define("SQLUsername", "MySQLUsername");
-define("SQLPassword", "MySQLPassword");
-define("database", "MySQLDatabase");
+
+include_once 'config.php';
 
 //Segurança contra SQLInjection (Prepared Query)
 function prepareQuery($conn, $query, $type, array $parameters)
 {
     $stmt = $conn->prepare($query);
-    if($stmt != false){
     call_user_func_array(array($stmt, "bind_param"), refValues(array_merge(array($type), $parameters)));
     $stmt->execute();
     $res = $stmt->fetch();
-    $stmt->close();} else {
-        echo'SQL Error';
-    }
+    $stmt->close();
 
     return $res;
 }
@@ -33,7 +27,6 @@ function refValues($arr){
 
 function readFromDatabase($email, $password)
 {
-    
     $conn = new mysqli(SQLServer, SQLUsername, SQLPassword, database);
 
 
@@ -60,10 +53,10 @@ function readFromDatabase($email, $password)
 }
 
 
-function sendToDatabase($email, $name, $password, $time)
+function sendToDatabase($email, $name, $password, $time, $oauth = false)
 {
     $conn = new mysqli(SQLServer, SQLUsername, SQLPassword, database);
-    
+
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
@@ -71,26 +64,34 @@ function sendToDatabase($email, $name, $password, $time)
     $safe_email = $conn->real_escape_string($email);
     $safe_name = $conn->real_escape_string($name);
 
-    
     $duplicateSQLVerification = "SELECT * FROM Accounts WHERE email = ?;";
 
     $res = prepareQuery($conn, $duplicateSQLVerification, "s", array($safe_email));
 
 
     if ($res == NULL) {
-        $addToDatabase = "INSERT INTO Accounts (email, name, password, time, registerToken, verified) VALUES (?, ?, SHA2(?,512), ?, SHA1(" . time() . "), false);";
+    	if(!$oauth){
+            $addToDatabase = "INSERT INTO Accounts (email, name, password, time, registerToken, verified, oauth) VALUES (?, ?, SHA2(?,512), ?, SHA1(" . time() . "), false, false);";
 
-        $res = prepareQuery($conn, $addToDatabase, "ssss", array($safe_email, $safe_name, $password, $time));
+            $res = prepareQuery($conn, $addToDatabase, "ssss", array($safe_email, $safe_name, $password, $time));
 
-        $out = 0;
+
+	} else {
+	    $addToDatabase = "INSERT INTO Accounts (email, name, time, registerToken, verified, oauth) VALUES (?, ?, ?, SHA1(" . time() . "), true, true);";
+
+            $res = prepareQuery($conn, $addToDatabase, "sss", array($safe_email, $safe_name, $time));
+
+            
+	}
+	$out = 0;
     }
 
 
     //SQL Query - obtenção do id
-    $readID = "SELECT RegisterToken FROM Accounts ORDER BY ID DESC LIMIT 1;";
+    $readID = "SELECT registerToken FROM Accounts ORDER BY ID DESC LIMIT 1;";
 
     $res = $conn->query($readID);
-    $id = $res->fetch_row();
+    $id = $res->fetch_all();
 
 
     $conn->close();
@@ -154,7 +155,7 @@ function get_news()
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $getNews = "SELECT * FROM News ORDER BY id DESC LIMIT 5;";
+    $getNews = "SELECT * FROM News ORDER BY id DESC;";
 
     $res = $conn->query($getNews);
 
@@ -222,35 +223,11 @@ function new_formID($user, $form_name){
     $safe_user = $conn->real_escape_string($user);
     $safe_title = $conn->real_escape_string($form_name);
 
-
     //SQL Query - obtenção do id
     $newForm = "INSERT INTO Forms (user, form) VALUES (?,?);";
 
     prepareQuery($conn, $newForm, "ss", array($safe_user, $safe_title));
 
-    return;
-}
-
-function removeAccountFromDatabase($user){
-    $conn = new mysqli(SQLServer, SQLUsername, SQLPassword, database);
-
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $safe_user = $conn->real_escape_string($user);
-
-    $removeForm = "DELETE FROM Accounts WHERE email=?;";
-    prepareQuery($conn, $removeForm, "s", array($safe_user));
-
-    $removeForm = "DELETE FROM Forms WHERE user=?;";
-    prepareQuery($conn, $removeForm, "s", array($safe_user));
-
-    $removeForm = "DELETE FROM Login WHERE email=?;";
-    prepareQuery($conn, $removeForm, "s", array($safe_user));
-
-    $conn->close();
     return;
 }
 
@@ -285,7 +262,7 @@ function removeOldSessions()
 
     $removeSessions = "DELETE FROM Login WHERE Expire < NOW();";
 
-    $conn->query($removeSessions);
+    prepareQuery($conn, $removeSessions, "", array());
 
 
     $conn->close();
@@ -327,27 +304,4 @@ function create_session($email, $remember)
     removeOldSessions();
 
     return $id[0][0];
-}
-
-function validateUser($registerToken){
-        //Inicia-se conecção com as seguintes constantes
-
-    $conn = new mysqli(SQLServer, SQLUsername, SQLPassword, database);
-
-    //Verifica-se a presença de erros
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $safe_registerToken = $conn->real_escape_string($registerToken);
-
-    $create_session = "UPDATE Accounts
-SET verified=1
-WHERE RegisterToken=?;";
-
-    prepareQuery($conn, $create_session, "s", array($safe_registerToken));
-
-    $conn->close();
-
-    return;
 }

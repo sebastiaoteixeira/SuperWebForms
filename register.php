@@ -3,16 +3,13 @@
 include 'mysql.php';
 include 'files-manager.php';
 include 'redirect.php';
+include_once 'config.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
 
-define('userMail', 'mail@example.com');
-define('passMail', 'UserPassEmail***');
-
-define('RECAPTCHA_V3_SECRET_KEY', 'YOURSECRETKEY');
 
 function sendError($err_code)
 {

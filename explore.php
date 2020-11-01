@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/logo/favicon.png">
 
-    <title>Webforms - Explorar</title>
+    <title>Super Webforms - Explorar</title>
 </head>
 
 <body style="text-align:center">

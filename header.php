@@ -33,7 +33,7 @@
             }
         } else {
             echo '<a href="login.html">';
-            echo '<button class="rbtn right login-btn main-btn">log in</button>';
+            echo '<button class="rbtn right login-btn main-btn">Entrar</button>';
             echo '</a>';
             echo '<hr class="menu-spacer">';
             echo '<a href="register.html">';

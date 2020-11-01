@@ -25,8 +25,16 @@ h2 {
 }
 
 p{
-    text-align: justify;
-    text-justify: inter-word;
+    text-align: justify!important;
+    text-justify: inter-word!important;
+    font-size: 12pt!important;
+    margin: 0!important;
+    padding: 0!important;
+    width: 100%!important;
+}
+
+textarea {
+    resize: vertical;
 }
 
 .warn {
@@ -162,15 +170,46 @@ hr {
     border-radius: 10px;
     width        : 95%;
     margin       : auto;
-
 }
 
+.container {
+  max-width: 50%;  
+  margin: 40px auto;
+}
+
+.hr-text {
+	position:relative;
+	display: inline-block;
+	width: 40%;
+	top: 10px;
+}
+  
+  
 .main-btn:active {
     box-shadow: inset 2px 2px 1px rgba(0, 0, 0, .8) !important;
 }
 
 button:focus {
     outline: 0;
+}
+
+.oauth-button{
+    height: 40px;
+    width: 300px;
+    padding: 4px;
+    margin-top: 20px;
+    font-size: 20px;
+    vertical-align: middle;
+    background-color: white;
+    border: #000 1px solid;
+    border-radius: 20px;
+}
+
+.oauth-button > img {
+	 position:relative;
+	 bottom: 1px;
+    float:left;
+    height: 32px;
 }
 
 #content {
@@ -271,7 +310,7 @@ img#start-img {
 
 .grid-element6 {
     grid-row   : 3;
-    grid-column: 4;
+    grid-column: 3 / span 2;
     text-align : center;
 }
 

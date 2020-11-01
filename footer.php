@@ -28,7 +28,9 @@
     <a href="/" class="site-map">Página inicial</a><br>
     <a href="/explore.php" class="site-map">Explorar</a><br><br>
     <a href="/login.html" class="site-map">Registrar</a><br>
-    <a href="login.html" class="site-map">Logar</a><br><br><br><br>
+    <a href="login.html" class="site-map">Entrar</a><br><br>
+    <a href="privacyPolicy.html" class="site-map">Política de privacidade</a><br>
+    <a href="termsOfService.html" class="site-map">Termos e Condições</a><br><br><br>
     <div id="copyright" class="site-map">©Sebastião Teixeira 2020
       <?php
       if (date("Y") > 2020) {

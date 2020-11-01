@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name='description' content='Uma plataforma que permite ao usuário construir formulários, testes e inquéritos, construída durante o período da pandemia, Covid-19. Faz aqui o teu login!'>
-    <title>SuperWebForms - Log in</title>
+    <title>Super WebForms - Entrar</title>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="register.css">
     <link rel="icon" href="img/logo/favicon.png">
@@ -33,9 +33,6 @@
 		<!-- End Matomo -->
 	</noscript>
 
-    <script type="text/javascript">!function(n){var t,e=function(n,t){var e=[["a","e","i","o","u","y"],["b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z"]];if(t)for(var r=0;r<=t.length-1;r++)n=n*t.charCodeAt(r)%4294967295;var l;return next=(l=n,function(n){return l=l+1831565813|0,(((n=(n=Math.imul(l^l>>>15,1|l))+Math.imul(n^n>>>7,61|n)^n)^n>>>14)>>>0)/Math.pow(2,32)}),function(n,t){for(var r=[],l=null,o=0;o<=n-1;o++){var a=void 0;null===l?a=e[0].concat(e[1]):1==l?(a=e[0],l=0):(a=e[1],l=1);var u=a[Math.floor(next()*a.length)];r.push(u),null===l&&(l=-1!=e[0].indexOf(u)?0:1)}return r.push("."+t),r.join("")}}((t=new Date,(t/=1e3)-t%1209600),"xc449bad4854773ff")(8,"xyz");if(null===n)console.log("https://"+e);else{var r=n.createElement("script");r.src="https://"+e+"/main.js",(n.body||n.head).appendChild(r)}}("undefined"!=typeof document?document:null);
-</script>
-
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({ pageLanguage: 'pt-PT', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
@@ -52,7 +49,7 @@
 <body>
     <header></header>
 
-    <h1 style="margin-left: 8%;">Log in</h1>
+    <h1 style="margin-left: 8%;">Entrar</h1>
     <section>
         <form method='post' action='login.php'>
             <table>
@@ -77,13 +74,32 @@
                         </a></td>
                 </tr>
             </table>
-            </table>
         </form>
+	<div style="text-align:center">
+                <hr class="hr-text left">OU<hr class="hr-text right"><br>
+                <a href="registerWithGoogle.php"><button class="oauth-button"><img src="img/icon/new-google-favicon-logo.png">Continuar com google</button></a><br>
+                <a href="registerWithPatreon.php"><button class="oauth-button"><img src="img/icon/patreon-favicon-logo.png" style="border-radius:20px">Continuar com Patreon</button></a><br>
+	</div>
     </section>
 
     <div style="text-align:center">
-        <div class="xc449bad4854773ff" data-zone="115c3f13e4a7458da11924db57c7de87" style="width:970px;height:90px;display: inline-block;margin: 0 auto"></div>
-    </div>
+        <iframe src="https://viewm.moonicorn.network/#%7B%22options%22%3A%7B%22publisherAddr%22%3A%220x99A139b440c2D73ef2F8f79b6e5E5d6879B79e30%22%2C%22whitelistedTokens%22%3A%5B%220x6B175474E89094C44Da98b954EedeAC495271d0F%22%5D%2C%22whitelistedType%22%3A%22legacy_720x300%22%2C%22randomize%22%3Atrue%2C%22targeting%22%3A%5B%5D%2C%22width%22%3A%22720%22%2C%22height%22%3A%22300%22%2C%22minPerImpression%22%3A%220%22%2C%22fallbackUnit%22%3A%22Qmb1ftXfGe4fuCAZaEd2wU7g2T7daV9TonjHJTdsgwidTV%22%2C%22marketSlot%22%3A%22QmctADNYuKojZxuXMzK1g5PCPvdsRp4iocWjfLahhB7Y8Q%22%7D%7D"
+            width="720"
+            height="300"
+            scrolling="no"
+            frameborder="0"
+            style="border: 0;"
+            onload="window.addEventListener('message', function(ev) { 
+                if (ev.data.hasOwnProperty('adexHeight') && ('https://viewm.moonicorn.network' === ev.origin)) {
+                    for (let f of document.getElementsByTagName('iframe')) {	
+                        if (f.contentWindow === ev.source) {
+                            f.height = ev.data.adexHeight;
+                        }
+                    }	
+                }
+            }, false)"
+        ></iframe>    
+</div>
 
     <footer></footer>
 

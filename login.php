@@ -14,7 +14,7 @@ function sendError($err_code)
 
 function salt($email)
 {
-    $conn = new mysqli(constant("SQLServer"), constant("SQLUsername"), constant("SQLPassword"), constant("database"));
+    $conn = new mysqli(SQLServer, SQLUsername, SQLPassword, database);
 
 
     if ($conn->connect_error) {

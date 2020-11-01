@@ -1,14 +1,13 @@
 <?php
 
 include 'redirect.php';
+include 'config.php'
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
 
-define('userMail', 'EMailAddress');
-define('passMail', 'EMailPassword');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mail = new PHPMailer();

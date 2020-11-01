@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>WebForms - Painel de Controlo</title>
+    <title>Super WebForms - Painel de Controlo</title>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="dashboard.css">
     <link rel="icon" href="img/logo/favicon.png">
@@ -57,8 +57,10 @@
                     <h1 class="wrap">Meus Formulários</h1>
                 </th>
                 <td></td>
-                <th>
-                    <button class="obtn main-btn right new wrap">Criar novo</button>
+                <th><?php
+		    if(isset($email)){
+                        echo '<button class="obtn main-btn right new wrap">Criar novo</button>';
+		    } ?>
                 </th>
             </tr>
             <tr height="50px"></tr>
@@ -95,9 +97,11 @@
 
             <tr style="height:100px;"></tr>
 
-            <tr id="delete_account-row">
-                <th><a href="deleteAccount.html"><button id="delete_account" class="main-btn red right">Apagar conta</button></a></th>
-            </tr>
+            <?php
+		    if(isset($email)){
+                        echo '<tr id="delete_account-row">
+                <th><a href="deleteAccount.html"><button id="delete_account" class="main-btn red right">Apagar conta</button></a> </th>
+            </tr>';} ?>
 
 
             <div class="modal">

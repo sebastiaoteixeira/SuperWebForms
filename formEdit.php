@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <script src="jquery-3.5.1.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebForms - <?php echo $form->title; ?></title>
+    <title>Super WebForms - <?php echo $form->title; ?></title>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="form.css">
@@ -250,14 +250,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             });
 
             $('#date').prop('disabled', true);
+
+            function adj_temp(){
+                if ($('#temp_type2').is(':checked')) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            
+            $('#date').prop('disabled', adj_temp());
+
             $('.temp').on('change', function() {
-                $('#date').prop('disabled', function() {
-                    if ($('#temp_type2').is(':checked')) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
+                $('#date').prop('disabled', adj_temp());
             });
 
             $('#date').prop('min', new Date().toJSON.split('T')[0]);

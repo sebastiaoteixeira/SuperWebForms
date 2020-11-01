@@ -1,5 +1,5 @@
 <?php
-define('path', "/path/to/site/");
+include 'config.php';
 
 function create_user_paths($email)
 {
