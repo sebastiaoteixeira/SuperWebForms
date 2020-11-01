@@ -31,12 +31,14 @@ composer require google/apiclient:"^2.7"
 
 ## Instalation
 All custom configurations are found in config.php.
+
 First transfer all the code to the site folder. Standard Apache path:
 ```
 /var/www/html
 ```
 
 Edit all custom configurations are found in config.php.
+
 Reload the host service. Apache exemple:
 ```
 sudo systemctl restart apache2
